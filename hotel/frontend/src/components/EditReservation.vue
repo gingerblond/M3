@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="sm" style="width:400px">
+  <b-container fluid="sm">
 
     <b-form v-on:submit.prevent="submitForm">
     <div class="form-group">
@@ -51,7 +51,7 @@
       <button class="btn btn-info" style="margin-top: 10px">Update reservation</button>
     </div>
 
-      <b-alert variant="success" show v-if="success"> You updated successfully reservation with ID: <strong>{{parentData.reservationID}}</strong>
+      <b-alert variant="success" show v-if="success"> You updated successfully reservation with ID: <strong>{{parentData.reservationId}}</strong>
       </b-alert>
   </b-form>
   </b-container>
@@ -64,7 +64,7 @@ export default {
   name: "EditReservation",
   methods: {
     setData() {
-      this.form.reservationID = this.parentData.reservationID;
+      this.form.reservationId = this.parentData.reservationId;
       this.form.customer.customerId = this.parentData.customer.customerId;
       this.form.customer.firstName = this.parentData.customer.firstName;
       this.form.customer.lastName = this.parentData.customer.lastName;
@@ -76,7 +76,7 @@ export default {
           (res) => {
             this.roomsList = res.data;
             if (this.roomsList.length > 0) {
-              this.form.room.roomID = this.roomsList[0].roomID;
+              this.form.room.roomId = this.roomsList[0].roomId;
               this.form.room.type = this.roomsList[0].type;
               this.form.room.available = this.roomsList[0].available;
             } else {
@@ -115,7 +115,7 @@ export default {
       axios.put("http://localhost:8000/updateReservation", this.form).then(
           (res)=>{
             this.success=true;
-            this.parentData.reservationID=res.data.reservationID;
+            this.parentData.reservationId=res.data.reservationId;
           }
       )
     }
@@ -124,7 +124,7 @@ export default {
   data() {
     return {
       form: {
-        reservationID: null,
+        reservationId: null,
         price: null,
         date: null,
         duration: null,
@@ -135,7 +135,7 @@ export default {
           idCard: null
         },
         room: {
-          roomID: null,
+          roomId: null,
           available: true,
           type: null
         }
@@ -164,7 +164,7 @@ export default {
         idCard: null
       },
       room: {
-        roomID: null,
+        roomId: null,
         available: true,
         type: null
       }

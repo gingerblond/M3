@@ -230,7 +230,7 @@ export default {
       selected: null,
       options: [{text: 'Choose room type', value: null}, {text: 'Single room', value: 'SINGLE_ROOM'}, {text: 'Double room', value: 'DOUBLE_ROOM'},
         {text: 'Apartment', value: 'APARTMENT'}, {text: 'Honeymoon Sweet', value: 'HONEYMOON_SWEET'}],
-      reservationID: null,
+      reservationId: null,
       response: null,
       totalPrice: null,
       showCalc: false,

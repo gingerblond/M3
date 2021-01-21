@@ -32,8 +32,7 @@ public class ReservationController {
     private ReservationMoRepository reservationMoRepository;
     @Autowired
     private RoomRepository roomRepository;
-    @Autowired
-    private HotelMoRepository hotelMoRepository;
+
 
     /**
      * POST Save a new reservation
@@ -44,22 +43,9 @@ public class ReservationController {
         return service.saveReservation(reservation);
     }*/
     public ReservationMo addReservation(@RequestBody ReservationMo reservationMo){
-        changeAvailability(reservationMo.getRoom());
+        service.changeAvailabilityMo(reservationMo.getRoom());
         reservationMo.getRoom().setAvailable(!reservationMo.getRoom().isAvailable());
         return reservationMoRepository.save(reservationMo);
-    }
-
-    public HotelMo changeAvailability(RoomMo room){
-        List<RoomMo> rooms = hotelMoRepository.findAll().get(0).getRoomsMo();
-        for(RoomMo r: rooms){
-            if(r.getRoomId()==room.getRoomId()){
-                r.setAvailable(!room.isAvailable());
-                r.setType(room.getType());
-            }
-        }
-        HotelMo hotel = hotelMoRepository.findAll().get(0);
-        HotelMo hotelMo= new HotelMo(hotel.getHotelId(),hotel.getAddress(),rooms);
-        return hotelMoRepository.save(hotelMo);
     }
 
     /**
@@ -81,8 +67,8 @@ public class ReservationController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping ("getReservation/{id}")
-    public Reservation getReservation(@PathVariable int id){
-        return service.getReservationById(id);
+    public ReservationMo getReservation(@PathVariable String id){
+        return service.getReservationMoById(id);
     }
 
     /**
@@ -92,7 +78,7 @@ public class ReservationController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping ("getReservationsByCustomer/{id}")
-    public List<Reservation> getReservationsByCustomerID(@PathVariable int id){
+    public List<ReservationMo> getReservationsByCustomerID(@PathVariable String id){
         return service.getReservationsByCustomerID(id);
     }
 
@@ -113,8 +99,9 @@ public class ReservationController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping ("updateReservation")
-    public Reservation updateReservation(@RequestBody Reservation reservation) {
-        return service.updateReservation(reservation);
+    public ReservationMo updateReservation(@RequestBody ReservationMo reservation) {
+        //return service.updateReservation(reservation);
+        return service.updateReservationMo(reservation);
     }
 
     /**

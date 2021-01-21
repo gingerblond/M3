@@ -1,13 +1,13 @@
 <template>
-  <b-container fluid="sm">
+  <b-container fluid="sm" style="width:1200px">
     <h1> Manage reservations</h1>
     <b-form id="app" v-on:submit.prevent="getReservation">
-      <div class="form-group">
+      <div class="form-group" style="width:300px">
         <label for="reservationID">Customer ID:</label>
         <input type="text" class="form-control" id="reservationID" placeholder="Please provide your CustomerID"
                v-model="form.customerID" required>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="width:300px">
         <button class="btn btn-info" style="margin-top: 10px">View Reservations List</button>
       </div>
     </b-form>
@@ -22,22 +22,22 @@
         <th> Manage Reservation</th>
       </tr>
       <tr v-for="res in reservations" :key="res.date">
-        <td> {{ res.reservationID }}</td>
+        <td> {{ res.reservationId }}</td>
         <td> {{ res.date }}</td>
         <td> {{ res.duration }}</td>
         <td> ${{ res.price }}</td>
         <td> {{ res.customer.firstName }} {{ res.customer.lastName }}</td>
         <td> {{ res.room.type }}</td>
         <td>
-          <button class="btn-outline-info" v-on:click="deleteReservation(res.reservationID)">Delete</button>
-          <button class="btn-outline-info" v-on:click="editReservation(res.reservationID)">Edit</button>
+          <button class="btn-outline-info" v-on:click="deleteReservation(res.reservationId)">Delete</button>
+          <button class="btn-outline-info" v-on:click="editReservation(res.reservationId)">Edit</button>
         </td>
       </tr>
     </table>
     <div>{{deleteRes}}</div>
     <div v-if="reservations.length==0" style="color: crimson"> No reservations for customer with ID: {{ form.customerID }}</div>
     <div  style="font-weight: bold;font-size: large;margin-top: 10px" v-if="showForm"> Edit reservation with ID: {{resId}}</div>
-    <edit-reservation :parent-data="$data.editRes" v-if="showForm"></edit-reservation>
+    <edit-reservation :parent-data="$data.editRes" v-if="showForm" style="margin-left: 20px"></edit-reservation>
   </b-container>
 
 
@@ -87,7 +87,7 @@ export default {
         },
         deleteRes: null,
         reservations: [{
-          reservationID: null,
+          reservationId: null,
           price: null,
           date: null,
           duration: null,

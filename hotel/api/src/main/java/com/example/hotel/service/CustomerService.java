@@ -49,7 +49,10 @@ public class CustomerService {
      */
     public String deleteCustomer(int id) {
         List<Reservation> reservations = new ArrayList<>();
-        reservations = reservationService.getReservationsByCustomerID(id);
+        /**
+         * TODO
+         */
+        //reservations = reservationService.getReservationsByCustomerID(id);
         for (Reservation reservation: reservations) {
             reservationService.deleteReservation(reservation.getReservationID());
         }
