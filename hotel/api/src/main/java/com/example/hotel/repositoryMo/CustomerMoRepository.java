@@ -4,4 +4,5 @@ import com.example.hotel.model.CustomerMo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CustomerMoRepository extends MongoRepository<CustomerMo, Integer> {
+    CustomerMo findByCustomerId(String customerId);
 }

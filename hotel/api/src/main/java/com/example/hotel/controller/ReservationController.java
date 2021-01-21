@@ -3,9 +3,15 @@ package com.example.hotel.controller;
 import com.example.hotel.dto.ReservationReport;
 
 import com.example.hotel.entity.Reservation;
+import com.example.hotel.entity.Room;
+import com.example.hotel.model.HotelMo;
+import com.example.hotel.model.ReservationMo;
+import com.example.hotel.model.RoomMo;
 import com.example.hotel.repository.CustomerRepository;
 import com.example.hotel.repository.ReservationRepository;
 import com.example.hotel.repository.RoomRepository;
+import com.example.hotel.repositoryMo.HotelMoRepository;
+import com.example.hotel.repositoryMo.ReservationMoRepository;
 import com.example.hotel.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +28,38 @@ public class ReservationController {
 
     @Autowired
     private ReservationRepository reservationRepository;
-
+    @Autowired
+    private ReservationMoRepository reservationMoRepository;
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private HotelMoRepository hotelMoRepository;
 
     /**
      * POST Save a new reservation
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("addReservation")
-    public Reservation addReservation(@RequestBody Reservation reservation){
+    /*public Reservation addReservation(@RequestBody Reservation reservation){
         return service.saveReservation(reservation);
+    }*/
+    public ReservationMo addReservation(@RequestBody ReservationMo reservationMo){
+        changeAvailability(reservationMo.getRoom());
+        reservationMo.getRoom().setAvailable(!reservationMo.getRoom().isAvailable());
+        return reservationMoRepository.save(reservationMo);
+    }
+
+    public HotelMo changeAvailability(RoomMo room){
+        List<RoomMo> rooms = hotelMoRepository.findAll().get(0).getRoomsMo();
+        for(RoomMo r: rooms){
+            if(r.getRoomId()==room.getRoomId()){
+                r.setAvailable(!room.isAvailable());
+                r.setType(room.getType());
+            }
+        }
+        HotelMo hotel = hotelMoRepository.findAll().get(0);
+        HotelMo hotelMo= new HotelMo(hotel.getHotelId(),hotel.getAddress(),rooms);
+        return hotelMoRepository.save(hotelMo);
     }
 
     /**
@@ -44,7 +71,7 @@ public class ReservationController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping ("deleteReservation/{id}")
     public String deleteReservation(@PathVariable int id) {
-         return service.deleteReservation(id);
+        return service.deleteReservation(id);
     }
 
     /**

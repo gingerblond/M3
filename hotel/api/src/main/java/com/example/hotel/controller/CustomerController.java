@@ -1,19 +1,23 @@
 package com.example.hotel.controller;
 
 import com.example.hotel.entity.Customer;
+import com.example.hotel.model.CustomerMo;
 import com.example.hotel.repository.CustomerRepository;
+import com.example.hotel.repositoryMo.CustomerMoRepository;
 import com.example.hotel.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CustomerController {
-
     @Autowired
     CustomerRepository customerRepository;
-
+    @Autowired
+    CustomerMoRepository customerMoRepository;
     @Autowired
     private CustomerService service;
 
@@ -22,10 +26,13 @@ public class CustomerController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/addCustomer")
-    public Customer addCustomer(@RequestBody Customer customer){
+    /*public Customer addCustomer(@RequestBody Customer customer){
         return service.addCustomer(customer);
-    }
+    }*/
+    public CustomerMo addCustomer(@RequestBody CustomerMo customerMo) {
+        return customerMoRepository.insert(customerMo);
 
+    }
     /**
      * List all customers
      */
@@ -40,12 +47,14 @@ public class CustomerController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/customerById/{id}")
-    public Customer findCustomerById(@PathVariable int id) {
-        return service.getCustomerById(id);
+    public CustomerMo findCustomerById(@PathVariable String id) {
+        // return service.getCustomerById(id);
+        return customerMoRepository.findByCustomerId(id);
+
     }
 
     /**
-    * Update customer details
+     * Update customer details
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/updateCustomer")

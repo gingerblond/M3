@@ -15,19 +15,19 @@
       <div class="form-group" v-if="newC">
         <label for="idCard">ID Card</label>
         <input type="text" class="form-control" id="idCard" placeholder="Please put your ID Card Number"
-               v-model="form.customer.idCard" required>
+               v-model="customer.idCard" required>
       </div>
 
       <div class="form-group" v-if="newC">
         <label for="firstName">First Name</label>
         <input type="text" class="form-control" id="firstName" placeholder="Please put your First Name"
-               v-model="form.customer.firstName" required>
+               v-model="customer.firstName" required>
       </div>
 
       <div class="form-group" v-if="newC">
         <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Please put your Last Name" v-model="form.customer.lastName"
-                required>
+        <input type="text" class="form-control" id="lastName" placeholder="Please put your Last Name" v-model="customer.lastName"
+               required>
       </div>
       <div v-if="newC" >
         <button class="btn btn-outline-info"  type="button" @click="addCustomer" style="margin-top: 5px">Add Customer</button>
@@ -87,7 +87,7 @@
         </b-row>
         <b-row>
           <b-col><strong>Total price: </strong> ${{ form.price }}</b-col>
-         </b-row>
+        </b-row>
       </b-card>
 
       <div class="form-group">
@@ -129,7 +129,7 @@ export default {
       this.form.customer.idCard='';
     },
     addCustomer() {
-      axios.post(`http://localhost:8000/addCustomer`,this.form.customer).then(
+      axios.post(`http://localhost:8000/addCustomer`,this.customer).then(
           (res) =>
           {
             this.successNewCustomer = true;
@@ -173,7 +173,7 @@ export default {
           (res) => {
             this.roomsList = res.data;
             if(this.roomsList.length>0) {
-              this.form.room.roomID = this.roomsList[0].roomID;
+              this.form.room.roomId = this.roomsList[0].roomId;
               this.form.room.type = this.roomsList[0].type;
               this.form.room.available = this.roomsList[0].available;
             }
@@ -200,6 +200,8 @@ export default {
               default:
                 break;
             }
+            console.log(this.form.room.roomId)
+            console.log(this.form.room.type)
           })
     }
   },
@@ -218,7 +220,7 @@ export default {
           idCard: null
         },
         room: {
-          roomID: null,
+          roomId: null,
           available: true,
           type: null
         }
@@ -238,7 +240,12 @@ export default {
       cusRes: null,
       successCustomer: false,
       successNewCustomer:false,
-      singlePrice: null
+      singlePrice: null,
+      customer: {
+        firstName: null,
+        lastName: null,
+        idCard: null
+      },
     };
   }
 }

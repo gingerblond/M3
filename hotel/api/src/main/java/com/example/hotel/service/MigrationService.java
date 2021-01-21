@@ -76,14 +76,14 @@ public class MigrationService {
      * Migrate customers in MongoDB
      */
     private void addCustomersToMongo(){
-       List<Customer> customers = customerService.getCustomers();
-       List<CustomerMo> customersMo = new ArrayList<>();
+        List<Customer> customers = customerService.getCustomers();
+        List<CustomerMo> customersMo = new ArrayList<>();
         for (Customer customer: customers) {
-            customersMo.add(new CustomerMo(sequenceGeneratorService.getSequenceNumber(CustomerMo.SEQUENCE_NAME),customer.getFirstName(),customer.getLastName(),customer.getIdCard()));
+            customersMo.add(new CustomerMo("",customer.getFirstName(),customer.getLastName(),customer.getIdCard()));
         }
-       for (CustomerMo customerMo: customersMo) {
-           customerMoRepository.save(customerMo);
-       }
+        for (CustomerMo customerMo: customersMo) {
+            customerMoRepository.save(customerMo);
+        }
     }
 
     /**
@@ -94,7 +94,7 @@ public class MigrationService {
         List<ReservationMo> reservationsMo = new ArrayList<>();
         for (Reservation reservation: reservations) {
             RoomMo roomMo= getRoomMoById(reservation.getRoom().getRoomID());
-            reservationsMo.add(new ReservationMo(sequenceGeneratorService.getSequenceNumber(ReservationMo.SEQUENCE_NAME),reservation.getPrice(),
+            reservationsMo.add(new ReservationMo("",reservation.getPrice(),
                     reservation.getDate(),reservation.getDuration(),customerMoRepository.findAll().get(0),roomMo));
         }
         for (ReservationMo reservationMo: reservationsMo) {

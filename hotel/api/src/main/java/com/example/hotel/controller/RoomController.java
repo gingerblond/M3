@@ -1,6 +1,8 @@
 package com.example.hotel.controller;
 
 import com.example.hotel.entity.Room;
+import com.example.hotel.model.RoomMo;
+import com.example.hotel.repositoryMo.HotelMoRepository;
 import com.example.hotel.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,8 @@ public class RoomController {
 
     @Autowired
     private RoomService service;
+    @Autowired
+    private HotelMoRepository hotelMoRepository;
 
     /**
      * Add new room
@@ -59,8 +63,18 @@ public class RoomController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("getRooms/{type}")
-    public List<Room> getRoomsByType(@PathVariable String type){
+   /* public List<Room> getRoomsByType(@PathVariable String type){
         return service.getRoomsByType(type);
+    }*/
+    public List<RoomMo> getRoomsByType(@PathVariable String type){
+        List<RoomMo> allRooms = hotelMoRepository.findAll().get(0).getRoomsMo();
+        List<RoomMo>toReturn = new ArrayList<>();
+
+        for(RoomMo r:allRooms) {
+            if(r.getType().equals(type) && r.isAvailable())
+                toReturn.add(r);
+        }
+        return toReturn;
     }
 
     /**
@@ -70,14 +84,15 @@ public class RoomController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("getRoomsCount/{type}")
     public int getRooms(@PathVariable String type) {
-        List<Room> rooms = service.getRooms();
+        List<RoomMo> rooms = hotelMoRepository.findAll().get(0).getRoomsMo();
+        //List<Room> rooms = service.getRooms();
         int occurancies = 0;
-        for (Room room:rooms){
+        for (RoomMo room:rooms){
             if(room.getType().equals(type) && room.isAvailable()){
                 occurancies++;
             }
         }
-          return occurancies;
+        return occurancies;
     }
 
     /**

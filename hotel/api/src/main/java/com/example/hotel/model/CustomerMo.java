@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -12,11 +11,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document(collection = "customer_DB")
 public class CustomerMo {
-    @Transient
-    public static final String SEQUENCE_NAME = "customers_sequence";
+    /*  @Transient
+      public static final String SEQUENCE_NAME = "customers_sequence";*/
     @Id
-    private int id;
+    private String customerId;
     private String firstName;
     private String lastName;
     private String idCard;
+
+
+
 }
+
+
+
