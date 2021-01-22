@@ -50,12 +50,15 @@ public class RoomController {
         return service.getRooms();
     }
 
+    /**
+     * Get List of all available rooms from MongoDb
+     * @return
+     */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("getAvailableRooms")
-    public List<Room> getAvailableRooms(){
-        return service.getAvailableRooms();
+    public List<RoomMo> getAvailableRooms(){
+        return service.getAvailableRoomsMo();
     }
-
     /**
      * Get rooms by type
      * @param type
@@ -102,8 +105,8 @@ public class RoomController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("updateRoom")
-    public Room updateRoom(@RequestBody Room room){
-        return  service.updateRoom(room);
+    public RoomMo updateRoom(@RequestBody RoomMo room){
+        return  service.updateRoomMo(room);
     }
     /**
      * Delete Room by room ID
@@ -113,6 +116,6 @@ public class RoomController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("deleteRoom/{id}")
     public String deleteRoom(@PathVariable int id) {
-        return service.deleteRoom(id);
+        return service.deleteRoomMo(id);
     }
 }

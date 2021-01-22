@@ -5,23 +5,23 @@
 
     <div class="row no-gutter">
       <div class="col-md-8 col-lg-6 ">
-        <b-button class="btn btn-info" style="width:300px; margin-top: 20px" v-on:click="getRooms"> Get available
-          rooms
+        <div>Get available Rooms or get all rooms under construction(unavailable, but not reserved:</div>
+        <b-button class="btn btn-info" style="width:300px; margin-top: 20px" v-on:click="getRooms"> Get rooms
         </b-button>
-        <table v-if="roomsList.length>0 && showTable" style="margin-top: 40px;">
+         <table v-if="roomsList.length>0 && showTable" style="margin-top: 50px;">
           <tr>
             <th> Room ID</th>
             <th> Room Type</th>
             <th> Is available?</th>
             <th> Manage Rooms</th>
           </tr>
-          <tr v-for="room in roomsList" :key="room.roomID">
-            <td> {{ room.roomID }}</td>
+          <tr v-for="room in roomsList" :key="room.roomId">
+            <td> {{ room.roomId }}</td>
             <td> {{ room.type }}</td>
             <td> {{ room.available }}</td>
             <td>
-              <button class="btn-outline-info" v-on:click="deleteRoom(room.roomID)">Delete</button>
-              <button class="btn-outline-info" v-on:click="editRoom(room.roomID)">Edit</button>
+              <button class="btn-outline-info" v-on:click="deleteRoom(room.roomId)">Delete</button>
+              <button class="btn-outline-info" v-on:click="editRoom(room.roomId)">Edit</button>
             </td>
           </tr>
         </table>
@@ -34,7 +34,7 @@
         <b-alert variant="success" show v-if="showDelete" style="margin-top: 95px"><strong>{{ delRoomMsg }}</strong>
         </b-alert>
         <div style="margin-top: 40px;" v-if="showEdit">
-          <h2> Please edit room with ID {{this.form.roomID}}:</h2>
+          <h2> Please edit room with ID {{this.form.roomId}}:</h2>
           <b-form v-on:submit.prevent="submitForm">
             <div class="form-group" style="margin-top: 25px">
               <label for="roomType">Room Type</label>
@@ -81,6 +81,8 @@ export default {
           (res) => {
             this.showDelete = true;
             this.delRoomMsg = res.data;
+            this.roomsList= this.roomsList.filter(room=>room.roomId!=id);
+
           }
       )
     },
@@ -88,14 +90,15 @@ export default {
       this.form.type = this.selected;
     },
     editRoom(id){
-      this.form.roomID = id;
+      this.form.roomId = id;
       this.showEdit = true;
     },
     submitForm(){
       axios.put("http://localhost:8000/updateRoom",this.form).then(
           (res) => {
-            this.roomId = res.data.roomID;
+            this.roomId = res.data.roomId;
             this.submitSuccess = true;
+            this.getRooms();
           }
       )
     }
@@ -104,13 +107,13 @@ export default {
   data() {
     return {
       form: {
-        roomID: null,
+        roomId: null,
         type: null,
         available: null,
       },
       roomsList: [
         {
-          roomID: null,
+          roomId: null,
           type: null,
           available: null
         }
@@ -126,7 +129,8 @@ export default {
       showEdit: false,
       delRoomMsg: null,
       roomId: null,
-      submitSuccess:false
+      submitSuccess:false,
+      unavailable: null
     };
   }
 }
