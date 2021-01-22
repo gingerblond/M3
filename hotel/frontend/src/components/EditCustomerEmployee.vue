@@ -54,6 +54,7 @@ export default {
       this.form.hotel = this.parentData.hotel;
       this.form.user = this.parentData.user;
       this.form.employeeId = this.parentData.employeeId;
+      this.employeeId = this.parentData.employeeId;
     },
     submitForm(){
       this.setData();
@@ -63,9 +64,12 @@ export default {
             this.showSuccess =true;
           }
       )
+      axios.get("http://localhost:8000/getCustomerEmployees")
     }
   },
-
+  beforeMount() {
+    this.setData();
+  },
   data() {
     return {
       form:{

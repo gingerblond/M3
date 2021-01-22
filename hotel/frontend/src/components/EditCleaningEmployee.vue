@@ -36,7 +36,7 @@
     </div>
 
     <div class="form-group">
-      <button class="btn btn-info" style="margin-top: 10px">Add employee</button>
+      <button class="btn btn-info" style="margin-top: 10px">Update employee</button>
     </div>
     <b-alert variant="success" show v-if="showSuccess"> You added successfully new employee with ID: <strong>{{employeeId}}</strong>.
     </b-alert>
@@ -56,6 +56,8 @@ export default {
       this.form.hotel = this.parentData.hotel;
       this.form.user = this.parentData.user;
       this.form.employeeId = this.parentData.employeeId;
+      this.employeeId = this.parentData.employeeId;
+
     },
     submitForm(){
       this.setData();
@@ -66,6 +68,9 @@ export default {
           }
       )
     }
+  },
+  beforeMount() {
+    this.setData();
   },
   data() {
     return {

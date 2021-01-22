@@ -35,7 +35,18 @@ public class UserController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/users/login")
-    public Status loginUser(@Valid @RequestBody User user) {
+    public Status loginUser(@Valid @RequestBody UserMo user) {
+        List<UserMo> users = userMoRepository.findAll();
+        for (UserMo other : users) {
+            if (other.equals(user)) {
+                user.setLoggedIn(true);
+                userMoRepository.save(user);
+                return Status.SUCCESS;
+            }
+        }
+        return Status.FAILURE;
+    }
+    /*public Status loginUser(@Valid @RequestBody User user) {
         List<User> users = userRepository.findAll();
         for (User other : users) {
             if (other.equals(user)) {
@@ -45,7 +56,7 @@ public class UserController {
             }
         }
         return Status.FAILURE;
-    }
+    }*/
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/users/logout")

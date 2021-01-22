@@ -55,30 +55,30 @@ public class EmployeeController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("getCustomerEmployees")
-    public List<CustomerServiceEmployee> findAllCustomerServiceEmployees() {
-        return customerServiceEmployeeService.getCustomerServiceEmployees();
+    public List<CustomerServiceEmplMo> findAllCustomerServiceEmployees() {
+        return customerServiceEmployeeService.getCustomerServiceEmployeesMo();
     }
 
     /**
-     * Delete customer servise employee by ID
+     * Delete customer service employee by ID
      * @param id
      * @return String confirmation
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("deleteCustomerEmployee/{id}")
-    public String deleteCustomerEmployee(@PathVariable int id) {
-        return customerServiceEmployeeService.deleteCustomerServiceEmployee(id);
+    public String deleteCustomerEmployee(@PathVariable String id) {
+        return customerServiceEmployeeService.deleteCustomerServiceEmplMo(id);
     }
 
     /**
-     * Get customer servise employee by ID
+     * Get customer service employee by ID
      * @param id
      * @return Obj: CustomerServiceEmployee
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("getCustomerEmployee/{id}")
-        public CustomerServiceEmployee getCustomerEmployeeById(@PathVariable int id){
-        return customerServiceEmployeeService.getCustomerServiceEmployeeById(id);
+        public CustomerServiceEmplMo getCustomerEmployeeById(@PathVariable String id){
+        return customerServiceEmployeeService.getCustomerServiceEmplMoById(id);
     }
 
     /**
@@ -88,8 +88,8 @@ public class EmployeeController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("updateCustomerEmployee")
-    public CustomerServiceEmployee updateCustomerEmployee(@RequestBody CustomerServiceEmployee employee){
-        return customerServiceEmployeeService.updateCustomerServiceEmployee(employee);
+    public CustomerServiceEmplMo updateCustomerEmployee(@RequestBody CustomerServiceEmplMo employee){
+        return customerServiceEmployeeService.updateCustomerServiceEmplMo(employee);
     }
 
 
@@ -114,8 +114,8 @@ public class EmployeeController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("getCleaningEmployees")
-    public List<CleaningServiceEmployee> findAllCleaningServiceEmployees() {
-        return cleaningEmployeeService.getCleaningServiceEmployees();
+    public List<CleaningServiceEmplMo> findAllCleaningServiceEmployees() {
+        return cleaningEmployeeService.getCleaningServiceEmployeesMo();
     }
 
     /**
@@ -125,8 +125,8 @@ public class EmployeeController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("deleteCleaningEmployee/{id}")
-    public String deleteCleaningEmployee(@PathVariable int id) {
-        return cleaningEmployeeService.deleteCleaningServiceEmployee(id);
+    public String deleteCleaningEmployee(@PathVariable String id) {
+        return cleaningEmployeeService.deleteCleaningServiceEmplMo(id);
     }
 
     /**
@@ -136,8 +136,8 @@ public class EmployeeController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("getCleaningEmployee/{id}")
-    public CleaningServiceEmployee getCleaningEmployeeById(@PathVariable int id){
-        return cleaningEmployeeService.getCleaningServiceEmployeeById(id);
+    public CleaningServiceEmplMo getCleaningEmployeeById(@PathVariable String id){
+        return cleaningEmployeeService.getCleaningServiceEmplMoById(id);
     }
 
     /**
@@ -147,8 +147,8 @@ public class EmployeeController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("updateCleaningEmployee")
-    public CleaningServiceEmployee updateCustomerEmployee(@RequestBody CleaningServiceEmployee employee){
-        return cleaningEmployeeService.updateCustomerServiceEmployee(employee);
+    public CleaningServiceEmplMo updateCustomerEmployee(@RequestBody CleaningServiceEmplMo employee){
+        return cleaningEmployeeService.updateCustomerServiceEmplMo(employee);
     }
 
     /**

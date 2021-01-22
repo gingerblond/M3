@@ -1,9 +1,8 @@
 <template>
-  <b-container fluid="sm" style="width:1200px">
-
+<div>
     <h1> Employee Administration</h1>
-    <div class="row no-gutter">
-      <div class="col-md-16 col-lg-6 " >
+    <div class="row " style="margin-left: 10px">
+      <div class="col-md-8 col-lg-7 " >
         <h2> Employee Administration Tools:</h2>
         <b-button class="btn btn-info" style="width:300px; margin-top: 20px" v-on:click="addCustomerServiceEmployee"> Add new customer service Employee
         </b-button>
@@ -15,7 +14,7 @@
         </b-button>
         <table v-if="employeesCust.length>0 && showTableCust" style="margin-top: 40px;">
           <tr>
-            <th> ID</th>
+            <th style="width: 20px"> ID</th>
             <th> Name</th>
             <th> Soc ID</th>
             <th> Hotel Address</th>
@@ -26,7 +25,7 @@
             <th> Manage</th>
           </tr>
           <tr v-for="employee in employeesCust" :key="employee.employeeId">
-            <td> {{ employee.employeeId}}</td>
+            <td style="width: 20px"> {{ employee.employeeId}}</td>
             <td> {{ employee.firstName }} {{ employee.lastName }}</td>
             <td> {{ employee.socialId}}</td>
             <td> {{ employee.hotel.address }}</td>
@@ -69,7 +68,7 @@
         <div v-if="employeesCLien.length==0" style="color: crimson">No cleaning service employees found! Please, add one!</div>
       </div>
 
-      <div class="col-md-3 col-lg-4  " style="margin-left: 180px">
+      <div class="col-md-3 col-lg-4  " >
         <customer-service-employee v-if="newCust"></customer-service-employee>
         <cleaning-service-employee v-if="newClean"></cleaning-service-employee>
         <b-alert variant="success" show v-if="showDeleteClien" style="margin-top: 120px"> <strong>{{deleteRespClien}}</strong>
@@ -82,8 +81,7 @@
 
 
       </div>
-
-  </b-container>
+</div>
 </template>
 
 <script>
@@ -151,6 +149,8 @@ export default {
           (res) => {
             this.deleteRespCust = res.data;
             this.showDeleteCust = true;
+            this.employeesCust= this.employeesCust.filter(res=>res.employeeId!=id);
+
           }
       )
     },
@@ -159,6 +159,7 @@ export default {
           (res) => {
             this.deleteRespClien = res.data;
             this.showDeleteClien = true;
+            this.employeesCLien= this.employeesCLien.filter(res=>res.employeeId!=id);
           }
       )
     },

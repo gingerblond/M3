@@ -54,7 +54,8 @@ export default {
       axios.get("http://localhost:8000/getUsers").then(
           (res) => {
             this.usersList = res.data;
-            this.form.id = this.usersList[0].id;
+            this.form.userId = this.usersList[0].userId;
+
           }
       )
     }
@@ -65,14 +66,14 @@ export default {
   data() {
     return{
       form:{
-        id: null,
+        userId: null,
         username: null,
         password: null,
       },
       result: null,
       usersList:[
         {
-          id: null,
+          userId: null,
           username: null,
           password: null,
           loggedIn: null

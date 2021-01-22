@@ -150,9 +150,9 @@ public class MigrationService {
         List<CustomerServiceEmplMo> customerServiceEmplsMo = new ArrayList<>();
         for (CustomerServiceEmployee employee : customerServiceEmployees) {
             HotelMo hotelMo= getHotelMo(employee.getHotel().getHotelId());
-            UserMo userMo = userMoRepository.findAll().get(0);
+            UserMo user = userMoRepository.findAll().get(0);
             customerServiceEmplsMo.add(new CustomerServiceEmplMo("",employee.getFirstName(),
-                    employee.getLastName(),employee.getSocialId(),hotelMo,employee.getPhoneNumber(),employee.getEmail(),userMo));
+                    employee.getLastName(),employee.getSocialId(),hotelMo,employee.getPhoneNumber(),employee.getEmail(),user));
         }
         for(CustomerServiceEmplMo employee: customerServiceEmplsMo){
             customerServiceEmplMoRepository.save(employee);

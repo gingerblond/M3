@@ -37,24 +37,39 @@ public class CustomerServiceEmployeeService {
     }
 
     /**
-     * Get list with all customer service employees
+     * Get list with all customer service employees from MySQL
      * @return
      */
     public List<CustomerServiceEmployee> getCustomerServiceEmployees() {
         return repository.findAll();
     }
+    /**
+     * Get list with all customer service employees from MongoDB
+     * @return
+     */
+    public List<CustomerServiceEmplMo> getCustomerServiceEmployeesMo(){
+        return customerServiceEmplMoRepository.findAll();
+    }
 
     /**
-     * Find customer service employee by Id
+     * Find customer service employee by Id from MySQL
      * @param id
      * @return
      */
     public CustomerServiceEmployee getCustomerServiceEmployeeById(int id) {
         return repository.findById(id).orElse(null);
     }
+    /**
+     * Find customer service employee by Id from MongoDB
+     * @param id
+     * @return
+     */
+    public CustomerServiceEmplMo getCustomerServiceEmplMoById(String id) {
+        return customerServiceEmplMoRepository.findByEmployeeId(id);
+    }
 
     /**
-     * Delete customer Service employee
+     * Delete customer Service employee from MySQL
      * @param id
      * @return
      */
@@ -64,8 +79,17 @@ public class CustomerServiceEmployeeService {
     }
 
     /**
-     * Update Customer service employee
-     * @param employee
+     * Delete customer Service employee from MongoDB
+     * @param id
+     * @return
+     */
+    public String deleteCustomerServiceEmplMo(String id) {
+        customerServiceEmplMoRepository.delete(customerServiceEmplMoRepository.findByEmployeeId(id));
+        return "Customer Servise employee with ID :" + id + " successfully removed!";
+    }
+
+    /**
+     * Update Customer service employee in MySQL
      * @return
      */
     public CustomerServiceEmployee updateCustomerServiceEmployee(CustomerServiceEmployee employee){
@@ -78,6 +102,23 @@ public class CustomerServiceEmployeeService {
         existingEmployee.setPhoneNumber(employee.getPhoneNumber());
         existingEmployee.setUser(employee.getUser());
         return repository.save(existingEmployee);
+    }
+
+    /**
+     * Update Customer service employee in MongoDB
+     * @param employee
+     * @return
+     */
+    public CustomerServiceEmplMo updateCustomerServiceEmplMo(CustomerServiceEmplMo employee){
+        CustomerServiceEmplMo existingEmployee = customerServiceEmplMoRepository.findByEmployeeId(employee.getEmployeeId());
+        existingEmployee.setFirstName(employee.getFirstName());
+        existingEmployee.setLastName(employee.getLastName());
+        existingEmployee.setSocialId(employee.getSocialId());
+        existingEmployee.setHotel(employee.getHotel());
+        existingEmployee.setEmail(employee.getEmail());
+        existingEmployee.setPhoneNumber(employee.getPhoneNumber());
+        existingEmployee.setUser(employee.getUser());
+        return customerServiceEmplMoRepository.save(existingEmployee);
     }
 
 }

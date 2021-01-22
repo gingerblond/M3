@@ -37,24 +37,39 @@ public class CleaningServiceEmployeeService {
     }
 
     /**
-     * Get list with all cleaning service employees
+     * Get list with all cleaning service employees from MySQL
      * @return
      */
     public List<CleaningServiceEmployee> getCleaningServiceEmployees() {
         return repository.findAll();
     }
+    /**
+     * Get list with all cleaning service employees from MongoDB
+     * @return
+     */
+    public List<CleaningServiceEmplMo> getCleaningServiceEmployeesMo() {
+        return cleaningServiceEmplMoRepository.findAll();
+    }
 
     /**
-     * Find cleaning service employee by Id
+     * Find cleaning service employee by Id in MySql
      * @param id
      * @return
      */
     public CleaningServiceEmployee getCleaningServiceEmployeeById(int id) {
         return repository.findById(id).orElse(null);
     }
+    /**
+     * Find cleaning service employee by Id in MongoDB
+     * @param id
+     * @return
+     */
+    public CleaningServiceEmplMo getCleaningServiceEmplMoById(String id) {
+        return cleaningServiceEmplMoRepository.findByEmployeeId(id);
+    }
 
     /**
-     * Delete CleaningServiceEmployee
+     * Delete CleaningServiceEmployee from MySql
      * @param id
      * @return
      */
@@ -64,7 +79,17 @@ public class CleaningServiceEmployeeService {
     }
 
     /**
-     * Update Cleaning service employee
+     * Delete CleaningServiceEmployee from MongoDb
+     * @param id
+     * @return
+     */
+    public String deleteCleaningServiceEmplMo(String id) {
+        cleaningServiceEmplMoRepository.delete(cleaningServiceEmplMoRepository.findByEmployeeId(id));
+        return "Cleaning Servise employee with ID :" + id + " successfully removed!";
+    }
+
+    /**
+     * Update Cleaning service employee in MySQL
      * @param employee
      * @return
      */
@@ -77,5 +102,20 @@ public class CleaningServiceEmployeeService {
         existingEmployee.setWorkingHours(employee.getWorkingHours());
         existingEmployee.setResponsibility(employee.getResponsibility());
         return repository.save(existingEmployee);
+    }
+    /**
+     * Update Cleaning service employee in MongoDb
+     * @param employee
+     * @return
+     */
+    public CleaningServiceEmplMo updateCustomerServiceEmplMo(CleaningServiceEmplMo employee){
+        CleaningServiceEmplMo existingEmployee = cleaningServiceEmplMoRepository.findByEmployeeId(employee.getEmployeeId());
+        existingEmployee.setFirstName(employee.getFirstName());
+        existingEmployee.setLastName(employee.getLastName());
+        existingEmployee.setSocialId(employee.getSocialId());
+        existingEmployee.setHotel(employee.getHotel());
+        existingEmployee.setWorkingHours(employee.getWorkingHours());
+        existingEmployee.setResponsibility(employee.getResponsibility());
+        return cleaningServiceEmplMoRepository.save(existingEmployee);
     }
 }

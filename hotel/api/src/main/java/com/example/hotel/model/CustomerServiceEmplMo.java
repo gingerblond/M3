@@ -12,13 +12,13 @@ public class CustomerServiceEmplMo extends EmployeeMo{
 
     private String phoneNumber;
     private String email;
-    private UserMo userMo;
+    private UserMo user;
 
-    public CustomerServiceEmplMo(String employeeId, String firstName, String lastName, String socialId, HotelMo hotel, String phoneNumber, String email, UserMo userMo) {
+    public CustomerServiceEmplMo(String employeeId, String firstName, String lastName, String socialId, HotelMo hotel, String phoneNumber, String email, UserMo user) {
         super(employeeId, firstName, lastName, socialId, hotel);
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.userMo = userMo;
+        this.user = user;
     }
 
     public String getPhoneNumber() {
@@ -37,11 +37,11 @@ public class CustomerServiceEmplMo extends EmployeeMo{
         this.email = email;
     }
 
-    public UserMo getUserMo() {
-        return userMo;
+    public UserMo getUser() {
+        return user;
     }
 
-    public void setUserMo(UserMo userMo) {
-        this.userMo = userMo;
+    public void setUser(UserMo user) {
+        this.user = user;
     }
 }
