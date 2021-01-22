@@ -46,13 +46,24 @@ public class ReservationService {
     }
 
     /**
-     * DELETE a reservation by its id
+     * DELETE a reservation by its id SQL
      * @param id
      * @return
      */
     public String deleteReservation(int id){
         changeAvailability(getReservationById(id).getRoom());
         repository.deleteById(id);
+        return "Reservation with id: " +id + " successfully deleted!";
+    }
+
+    /**
+     * DELETE a reservation by its id Mongo
+     * @param id
+     * @return
+     */
+    public String deleteReservationMo(String id){
+        changeAvailabilityMo(getReservationMoById(id).getRoom());
+        reservationMoRepository.delete(getReservationMoById(id));
         return "Reservation with id: " +id + " successfully deleted!";
     }
     public Reservation getReservationById(int id) {

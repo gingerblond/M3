@@ -95,9 +95,8 @@
       </div>
 
     </b-form>
-    <b-alert variant="success" show v-if="showSuccess"> You submitted successfully reservation with ID: <strong>{{reservationID}}</strong>
-      Please save this Reservation ID: <strong>{{reservationID}}</strong>, if you want to edit or delete your reservation!
-      Please save this Customer ID: <strong>{{this.form.customer.customerId}}</strong>, if you want to see your reservations!
+    <b-alert variant="success" show v-if="showSuccess"> You submitted successfully reservation with ID: <strong>{{reservationId}}</strong>
+      Please save this Customer ID: <strong>{{this.form.customer.customerId}}</strong>, if you want to manage your reservations!
 
     </b-alert>
   </b-container>
@@ -162,7 +161,7 @@ export default {
       axios.post('http://localhost:8000/addReservation', this.form).then(
           (res)=> {
             this.response = res.data;
-            this.reservationID = this.response.reservationID;
+            this.reservationId = this.response.reservationId;
             this.showSuccess = true;
           }
       )

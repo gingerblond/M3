@@ -56,8 +56,9 @@ public class ReservationController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping ("deleteReservation/{id}")
-    public String deleteReservation(@PathVariable int id) {
-        return service.deleteReservation(id);
+    public String deleteReservation(@PathVariable String id) {
+        return service.deleteReservationMo(id);
+        //return service.deleteReservation(id);
     }
 
     /**

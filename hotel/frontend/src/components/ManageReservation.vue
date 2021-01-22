@@ -34,7 +34,7 @@
         </td>
       </tr>
     </table>
-    <div>{{deleteRes}}</div>
+    <div style="margin-top: 20px; font-weight:bold">{{deleteRes}}</div>
     <div v-if="reservations.length==0" style="color: crimson"> No reservations for customer with ID: {{ form.customerID }}</div>
     <div  style="font-weight: bold;font-size: large;margin-top: 10px" v-if="showForm"> Edit reservation with ID: {{resId}}</div>
     <edit-reservation :parent-data="$data.editRes" v-if="showForm" style="margin-left: 20px"></edit-reservation>
@@ -73,12 +73,11 @@ export default {
       axios.delete(`http://localhost:8000/deleteReservation/${id}`).then(
           (res) => {
             this.deleteRes = res.data;
+            this.reservations= this.reservations.filter(res=>res.reservationId!=id);
           }
       )
       this.getReservation();
     },
-    getAll() {
-    }
   },
     data() {
       return {
