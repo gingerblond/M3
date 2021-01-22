@@ -12,8 +12,8 @@ public class CleaningServiceEmplMo extends EmployeeMo{
     private int workingHours;
     private String responsibility;
 
-    public CleaningServiceEmplMo(int employeeId, String firstName, String lastName, String socialId, HotelMo hotelMo, int workingHours, String responsibility) {
-        super(employeeId, firstName, lastName, socialId, hotelMo);
+    public CleaningServiceEmplMo(String employeeId, String firstName, String lastName, String socialId, HotelMo hotel, int workingHours, String responsibility) {
+        super(employeeId, firstName, lastName, socialId, hotel);
         this.workingHours = workingHours;
         this.responsibility = responsibility;
     }

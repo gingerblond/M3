@@ -14,8 +14,8 @@ public class CustomerServiceEmplMo extends EmployeeMo{
     private String email;
     private UserMo userMo;
 
-    public CustomerServiceEmplMo(int employeeId, String firstName, String lastName, String socialId, HotelMo hotelMo, String phoneNumber, String email, UserMo userMo) {
-        super(employeeId, firstName, lastName, socialId, hotelMo);
+    public CustomerServiceEmplMo(String employeeId, String firstName, String lastName, String socialId, HotelMo hotel, String phoneNumber, String email, UserMo userMo) {
+        super(employeeId, firstName, lastName, socialId, hotel);
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.userMo = userMo;

@@ -2,7 +2,9 @@ package com.example.hotel.controller;
 
 import com.example.hotel.entity.Status;
 import com.example.hotel.entity.User;
+import com.example.hotel.model.UserMo;
 import com.example.hotel.repository.UserRepository;
+import com.example.hotel.repositoryMo.UserMoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -12,6 +14,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserMoRepository userMoRepository;
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/users/register")
@@ -57,10 +61,14 @@ public class UserController {
         return Status.FAILURE;
     }
 
+    /**
+     * Get all users from Mongo
+      * @return
+     */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/getUsers")
-    public List<User> getUsers(){
-        return userRepository.findAll();
+    public List<UserMo> getUsers(){
+        return userMoRepository.findAll();
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")

@@ -109,7 +109,7 @@ public class MigrationService {
         List<User> users = userRepository.findAll();
         List<UserMo> usersMo = new ArrayList<>();
         for(User user: users){
-            usersMo.add(new UserMo(sequenceGeneratorService.getSequenceNumber(UserMo.SEQUENCE_NAME),user.getUsername(),user.getPassword(),user.isLoggedIn()));
+            usersMo.add(new UserMo("",user.getUsername(),user.getPassword(),user.isLoggedIn()));
         }
         for(UserMo userMo: usersMo){
             userMoRepository.save(userMo);
@@ -134,7 +134,7 @@ public class MigrationService {
         List<CleaningServiceEmplMo> cleaningServiceEmplsMo = new ArrayList<>();
         for(CleaningServiceEmployee employee: cleaningServiceEmployees){
             HotelMo hotelMo= getHotelMo(employee.getHotel().getHotelId());
-            cleaningServiceEmplsMo.add(new CleaningServiceEmplMo(sequenceGeneratorService.getSequenceNumber(CleaningServiceEmplMo.SEQUENCE_NAME),employee.getFirstName(),
+            cleaningServiceEmplsMo.add(new CleaningServiceEmplMo("",employee.getFirstName(),
                     employee.getLastName(),employee.getSocialId(),hotelMo,employee.getWorkingHours(),employee.getResponsibility()));
         }
         for (CleaningServiceEmplMo employee: cleaningServiceEmplsMo) {
@@ -151,7 +151,7 @@ public class MigrationService {
         for (CustomerServiceEmployee employee : customerServiceEmployees) {
             HotelMo hotelMo= getHotelMo(employee.getHotel().getHotelId());
             UserMo userMo = userMoRepository.findAll().get(0);
-            customerServiceEmplsMo.add(new CustomerServiceEmplMo(sequenceGeneratorService.getSequenceNumber(CustomerServiceEmplMo.SEQUENCE_NAME),employee.getFirstName(),
+            customerServiceEmplsMo.add(new CustomerServiceEmplMo("",employee.getFirstName(),
                     employee.getLastName(),employee.getSocialId(),hotelMo,employee.getPhoneNumber(),employee.getEmail(),userMo));
         }
         for(CustomerServiceEmplMo employee: customerServiceEmplsMo){

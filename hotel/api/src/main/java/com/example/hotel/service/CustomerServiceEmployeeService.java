@@ -2,7 +2,9 @@ package com.example.hotel.service;
 
 import com.example.hotel.entity.Customer;
 import com.example.hotel.entity.CustomerServiceEmployee;
+import com.example.hotel.model.CustomerServiceEmplMo;
 import com.example.hotel.repository.CustomerServiceEmployeeRepository;
+import com.example.hotel.repositoryMo.CustomerServiceEmplMoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +15,25 @@ public class CustomerServiceEmployeeService {
 
     @Autowired
     private CustomerServiceEmployeeRepository repository;
+    @Autowired
+    private CustomerServiceEmplMoRepository customerServiceEmplMoRepository;
 
     /**
-     * POST add new customer customer service employee
+     * POST add new customer customer service employee to MySQL
      * @param employee
      * @return
      */
     public CustomerServiceEmployee addCustomerServiceEmployee(CustomerServiceEmployee employee){
         return repository.save(employee);
+    }
+
+    /**
+     * Add new customer service employee to MongoDB
+     * @param employee
+     * @return
+     */
+    public CustomerServiceEmplMo addCustomerServiceEmplMo(CustomerServiceEmplMo employee){
+        return customerServiceEmplMoRepository.save(employee);
     }
 
     /**

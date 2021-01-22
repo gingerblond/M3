@@ -13,10 +13,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class UserMo {
 
-    @Transient
-    public static final String SEQUENCE_NAME = "users_sequence";
+   /* @Transient
+    public static final String SEQUENCE_NAME = "users_sequence";*/
     @Id
-    private int id;
+    private String userId;
     private  String username;
     private  String password;
     private  boolean loggedIn;

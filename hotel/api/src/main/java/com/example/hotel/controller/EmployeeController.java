@@ -4,6 +4,8 @@ package com.example.hotel.controller;
 import com.example.hotel.dto.CleaningServiceEmployeeReport;
 import com.example.hotel.entity.CleaningServiceEmployee;
 import com.example.hotel.entity.CustomerServiceEmployee;
+import com.example.hotel.model.CleaningServiceEmplMo;
+import com.example.hotel.model.CustomerServiceEmplMo;
 import com.example.hotel.repository.CleaningServiceEmployeeRepository;
 import com.example.hotel.repository.CustomerServiceEmployeeRepository;
 import com.example.hotel.repository.HotelRepository;
@@ -43,8 +45,8 @@ public class EmployeeController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("addCustomerEmployee")
-    public CustomerServiceEmployee addCustomerEmployee(@RequestBody CustomerServiceEmployee employee){
-        return customerServiceEmployeeService.addCustomerServiceEmployee(employee);
+    public CustomerServiceEmplMo addCustomerEmployee(@RequestBody CustomerServiceEmplMo employee){
+        return customerServiceEmployeeService.addCustomerServiceEmplMo(employee);
     }
 
     /**
@@ -102,8 +104,8 @@ public class EmployeeController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("addCleaningEmployee")
-    public CleaningServiceEmployee addCustomerEmployee(@RequestBody CleaningServiceEmployee employee){
-        return cleaningEmployeeService.addCleaningServiceEmployee(employee);
+    public CleaningServiceEmplMo addCustomerEmployee(@RequestBody CleaningServiceEmplMo employee){
+        return cleaningEmployeeService.addCleaningServiceEmplMo(employee);
     }
 
     /**
