@@ -4,4 +4,5 @@ import com.example.hotel.model.UserMo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface UserMoRepository extends MongoRepository<UserMo, Integer> {
+    UserMo findByUserId(String userId);
 }

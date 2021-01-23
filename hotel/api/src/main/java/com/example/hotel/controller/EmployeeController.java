@@ -161,5 +161,11 @@ public class EmployeeController {
         return cleaningServiceEmployeeRepository.getReportCleaningServiceEmployee();
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/CleaningServiceEmpl20Hours")
+    public List<CleaningServiceEmplMo> getReportClean20(){
+        return cleaningEmployeeService.getReportCleaningServiceEmployee();
+    }
+
 
 }

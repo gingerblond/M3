@@ -6,6 +6,9 @@ import com.example.hotel.model.CleaningServiceEmplMo;
 import com.example.hotel.repository.CleaningServiceEmployeeRepository;
 import com.example.hotel.repositoryMo.CleaningServiceEmplMoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,8 @@ public class CleaningServiceEmployeeService {
     private CleaningServiceEmployeeRepository repository;
     @Autowired
     private CleaningServiceEmplMoRepository cleaningServiceEmplMoRepository;
+    @Autowired
+    private MongoOperations mongoOperations;
 
     /**
      * POST add new cleaning service employee to MySQL
@@ -117,5 +122,12 @@ public class CleaningServiceEmployeeService {
         existingEmployee.setWorkingHours(employee.getWorkingHours());
         existingEmployee.setResponsibility(employee.getResponsibility());
         return cleaningServiceEmplMoRepository.save(existingEmployee);
+    }
+
+
+    public List<CleaningServiceEmplMo> getReportCleaningServiceEmployee(){
+        Query query = new Query(Criteria.where("workingHours").is(20));
+        List<CleaningServiceEmplMo> employees = mongoOperations.find(query,CleaningServiceEmplMo.class);
+        return employees;
     }
 }

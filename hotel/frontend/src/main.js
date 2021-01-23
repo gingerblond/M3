@@ -14,7 +14,7 @@ import RoomAdmin from "./components/RoomAdmin"
 import CustomerAdmin from "./components/CustomerAdmin"
 import EmployeeAdmin from "./components/EmployeeAdministration"
 import Reports from "./components/Reports"
-
+import {store} from './store';
 
 
 
@@ -44,6 +44,7 @@ const router = new VueRouter({
 });
 
 new Vue({
+    store,
     router,
     render: h => h(App),
 }).$mount('#app')

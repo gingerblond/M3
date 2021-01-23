@@ -1,17 +1,47 @@
 <template>
-<div>
+  <div>
     <h1> Employee Administration</h1>
-    <div class="row " style="margin-left: 10px">
-      <div class="col-md-8 col-lg-7 " >
+    <div v-if="$store.state.loggedIn" style="color: darkgreen; font-weight: bold">You are currently logged in!</div>
+    <div v-if="!$store.state.loggedIn" style="color: crimson; font-weight: bold">You are currently NOT logged in! Please
+      log in here:
+      <b-button class="btn btn-info" v-on:click="$router.push('login')">
+        LOGIN
+      </b-button>
+    </div>
+    <div class="row " style="margin-left: 10px" v-if="$store.state.loggedIn">
+      <div class="col-md-8 col-lg-7 ">
         <h2> Employee Administration Tools:</h2>
-        <b-button class="btn btn-info" style="width:300px; margin-top: 20px" v-on:click="addCustomerServiceEmployee"> Add new customer service Employee
-        </b-button>
-        <b-button class="btn btn-info" style="width:300px; margin-top: 20px" v-on:click="addCleaningServiceEmployee"> Add new cleaning service Employee
-        </b-button>
-        <b-button class="btn btn-info" style="width:300px; margin-top: 20px" v-on:click="getCustomerServiceEmployees"> See all customer service employees
-        </b-button>
-        <b-button class="btn btn-info" style="width:300px; margin-top: 20px" v-on:click="getCleaningServiceEmployees"> See all cleaning service employees
-        </b-button>
+        <b-card style="width: 1000px">
+          <b-card-body>
+            <b-row>
+              <b-col>
+                <b-button class="btn btn-info" style="width:300px; margin-top: 20px"
+                          v-on:click="addCustomerServiceEmployee">
+                  Add new customer service Employee
+                </b-button>
+              </b-col>
+              <b-col>
+                <b-button class="btn btn-info" style="width:300px; margin-top: 20px"
+                          v-on:click="addCleaningServiceEmployee">
+                  Add new cleaning service Employee
+                </b-button>
+              </b-col>
+              <div class="w-auto" style="margin-top: 10px"></div>
+              <b-col>
+                <b-button class="btn btn-info" style="width:300px; margin-top: 20px"
+                          v-on:click="getCustomerServiceEmployees">
+                  See all customer service employees
+                </b-button>
+              </b-col>
+              <b-col>
+                <b-button class="btn btn-info" style="width:300px; margin-top: 20px"
+                          v-on:click="getCleaningServiceEmployees">
+                  See all cleaning service employees
+                </b-button>
+              </b-col>
+            </b-row>
+          </b-card-body>
+        </b-card>
         <table v-if="employeesCust.length>0 && showTableCust" style="margin-top: 40px;">
           <tr>
             <th style="width: 20px"> ID</th>
@@ -25,14 +55,14 @@
             <th> Manage</th>
           </tr>
           <tr v-for="employee in employeesCust" :key="employee.employeeId">
-            <td style="width: 20px"> {{ employee.employeeId}}</td>
+            <td style="width: 20px"> {{ employee.employeeId }}</td>
             <td> {{ employee.firstName }} {{ employee.lastName }}</td>
-            <td> {{ employee.socialId}}</td>
+            <td> {{ employee.socialId }}</td>
             <td> {{ employee.hotel.address }}</td>
-            <td> {{ employee.phoneNumber}}</td>
-            <td> {{ employee.email}}</td>
-            <td> {{ employee.user.username}}</td>
-            <td> {{ employee.user.password}}</td>
+            <td> {{ employee.phoneNumber }}</td>
+            <td> {{ employee.email }}</td>
+            <td> {{ employee.user.username }}</td>
+            <td> {{ employee.user.password }}</td>
             <td>
               <button class="btn-outline-info" v-on:click="deleteCustomerEmployee(employee.employeeId)">Delete</button>
               <button class="btn-outline-info" v-on:click="editCustomerEmployee(employee.employeeId)">Edit</button>
@@ -40,7 +70,9 @@
           </tr>
         </table>
 
-        <div v-if="employeesCust.length==0" style="color: crimson"> No customer service employees found! Please, add one!</div>
+        <div v-if="employeesCust.length==0" style="color: crimson"> No customer service employees found! Please, add
+          one!
+        </div>
         <table v-if="employeesCLien.length>0 && showTableClien" style="margin-top: 40px;">
           <tr>
             <th> ID</th>
@@ -52,12 +84,12 @@
             <th> Manage</th>
           </tr>
           <tr v-for="employee in employeesCLien" :key="employee.employeeId">
-            <td> {{ employee.employeeId}}</td>
+            <td> {{ employee.employeeId }}</td>
             <td> {{ employee.firstName }} {{ employee.lastName }}</td>
-            <td> {{ employee.socialId}}</td>
+            <td> {{ employee.socialId }}</td>
             <td> {{ employee.hotel.address }}</td>
-            <td> {{ employee.workingHours}}</td>
-            <td> {{ employee.responsibility}}</td>
+            <td> {{ employee.workingHours }}</td>
+            <td> {{ employee.responsibility }}</td>
             <td>
               <button class="btn-outline-info" v-on:click="deleteClieningEmployee(employee.employeeId)">Delete</button>
               <button class="btn-outline-info" v-on:click="editCleaningEmployee(employee.employeeId)">Edit</button>
@@ -65,23 +97,30 @@
           </tr>
         </table>
 
-        <div v-if="employeesCLien.length==0" style="color: crimson">No cleaning service employees found! Please, add one!</div>
+        <div v-if="employeesCLien.length==0" style="color: crimson">No cleaning service employees found! Please, add
+          one!
+        </div>
       </div>
 
-      <div class="col-md-3 col-lg-4  " >
-        <customer-service-employee v-if="newCust"></customer-service-employee>
+      <div class="col-md-3 col-lg-4  ">
+        <button class="btn btn-outline-info" v-on:click="$router.push('login')"  type="button" style="width:300px; margin-top: 10px" > Go back to admin tools </button>
+          <customer-service-employee v-if="newCust"></customer-service-employee>
         <cleaning-service-employee v-if="newClean"></cleaning-service-employee>
-        <b-alert variant="success" show v-if="showDeleteClien" style="margin-top: 120px"> <strong>{{deleteRespClien}}</strong>
+        <b-alert variant="success" show v-if="showDeleteClien" style="margin-top: 120px">
+          <strong>{{ deleteRespClien }}</strong>
         </b-alert>
-        <b-alert variant="success" show v-if="showDeleteCust" style="margin-top: 120px"> <strong>{{deleteRespCust}}</strong>
+        <b-alert variant="success" show v-if="showDeleteCust" style="margin-top: 120px">
+          <strong>{{ deleteRespCust }}</strong>
         </b-alert>
-        <edit-customer-employee :parent-data="$data.editResCust" style="margin-left: 20px" v-if="showEditCust"></edit-customer-employee>
-        <edit-cleaning-employee :parent-data="$data.editResClien" style="margin-left: 20px" v-if="showEditClien"></edit-cleaning-employee>
+        <edit-customer-employee :parent-data="$data.editResCust" style="margin-left: 20px"
+                                v-if="showEditCust"></edit-customer-employee>
+        <edit-cleaning-employee :parent-data="$data.editResClien" style="margin-left: 20px"
+                                v-if="showEditClien"></edit-cleaning-employee>
       </div>
 
 
-      </div>
-</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -90,80 +129,81 @@ import CustomerServiceEmployee from "./CustomerServiceEmployee";
 import CleaningServiceEmployee from "./CleaningServiceEmployee";
 import EditCustomerEmployee from "./EditCustomerEmployee";
 import EditCleaningEmployee from "./EditCleaningEmployee";
+
 export default {
   name: "EmployeeAdministration",
   components: {EditCleaningEmployee, EditCustomerEmployee, CleaningServiceEmployee, CustomerServiceEmployee},
   methods: {
-    addCustomerServiceEmployee(){
+    addCustomerServiceEmployee() {
       this.newCust = true;
       this.newClean = false;
-      this.showTableCust= false;
+      this.showTableCust = false;
       this.showDeleteCust = false;
-      this.showTableClien= false;
-      this.showDeleteClien= false;
-      this.showEditClien=false;
-      this.showEditCust=false;
+      this.showTableClien = false;
+      this.showDeleteClien = false;
+      this.showEditClien = false;
+      this.showEditCust = false;
     },
-    addCleaningServiceEmployee(){
+    addCleaningServiceEmployee() {
       this.newClean = true;
       this.newCust = false;
-      this.showTableCust= false;
-      this.showTableClien= false;
+      this.showTableCust = false;
+      this.showTableClien = false;
       this.showDeleteCust = false;
-      this.showDeleteClien= false;
-      this.showEditClien=false;
-      this.showEditCust=false;
-      },
-    getCustomerServiceEmployees(){
-      this.showTableCust= true;
-      this.showTableClien= false;
+      this.showDeleteClien = false;
+      this.showEditClien = false;
+      this.showEditCust = false;
+    },
+    getCustomerServiceEmployees() {
+      this.showTableCust = true;
+      this.showTableClien = false;
       this.newClean = false;
       this.newCust = false;
       this.showDeleteCust = false;
-      this.showEditClien=false;
-      this.showEditCust=false;
+      this.showEditClien = false;
+      this.showEditCust = false;
 
       axios.get("http://localhost:8000/getCustomerEmployees").then(
-          (res)=> {
+          (res) => {
             this.employeesCust = res.data;
           }
       )
     },
-    getCleaningServiceEmployees(){
-      this.showTableClien= true;
-      this.showTableCust= false;
+    getCleaningServiceEmployees() {
+      this.showTableClien = true;
+      this.showTableCust = false;
       this.newClean = false;
       this.newCust = false;
       this.showDeleteCust = false;
-      this.showEditClien=false;
-      this.showEditCust=false;
+      this.showEditClien = false;
+      this.showEditCust = false;
 
       axios.get("http://localhost:8000/getCleaningEmployees").then(
-          (res)=> {
+          (res) => {
             this.employeesCLien = res.data;
           }
       )
     },
-    deleteCustomerEmployee(id){
+    deleteCustomerEmployee(id) {
       axios.delete(`http://localhost:8000/deleteCustomerEmployee/${id}`).then(
           (res) => {
             this.deleteRespCust = res.data;
             this.showDeleteCust = true;
-            this.employeesCust= this.employeesCust.filter(res=>res.employeeId!=id);
+            this.employeesCust = this.employeesCust.filter(res => res.employeeId != id);
 
           }
       )
     },
-    deleteClieningEmployee(id){
+    deleteClieningEmployee(id) {
       axios.delete(`http://localhost:8000/deleteCleaningEmployee/${id}`).then(
           (res) => {
             this.deleteRespClien = res.data;
             this.showDeleteClien = true;
-            this.employeesCLien= this.employeesCLien.filter(res=>res.employeeId!=id);
+            this.employeesCLien = this.employeesCLien.filter(res => res.employeeId != id);
           }
       )
     },
-    editCustomerEmployee(id){
+    editCustomerEmployee(id) {
       this.showEditCust = true;
       axios.get(`http://localhost:8000/getCustomerEmployee/${id}`).then(
           (res) => {
@@ -171,7 +211,7 @@ export default {
           }
       )
     },
-    editCleaningEmployee(id){
+    editCleaningEmployee(id) {
       this.showEditClien = true;
       axios.get(`http://localhost:8000/getCleaningEmployee/${id}`).then(
           (res) => {
@@ -186,34 +226,34 @@ export default {
       newClean: false,
       showTableCust: false,
       showTableClien: false,
-      employeesCust:[
+      employeesCust: [
         {
-          employeeId:null,
+          employeeId: null,
           firstName: null,
           lastName: null,
           socialId: null,
           hotel: {
             address: null,
           },
-          phoneNumber:null,
-          email:null,
+          phoneNumber: null,
+          email: null,
           user: {
-            username:null,
+            username: null,
             password: null,
           }
         }
       ],
-      employeesCLien:[
+      employeesCLien: [
         {
-          employeeId:null,
+          employeeId: null,
           firstName: null,
           lastName: null,
           socialId: null,
           hotel: {
             address: null,
           },
-          workingHours:null,
-          responsibility:null,
+          workingHours: null,
+          responsibility: null,
 
         }
       ],
@@ -224,7 +264,7 @@ export default {
       showEditCust: false,
       showEditClien: false,
       editResCust: null,
-      editResClien:null
+      editResClien: null
     };
   }
 }
@@ -236,6 +276,7 @@ h1 {
   font-size: xx-large;
   color: #2c3e50;
 }
+
 h2 {
   font-weight: bold;
   font-size: large;

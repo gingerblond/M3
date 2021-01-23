@@ -1,7 +1,14 @@
 <template>
   <b-container fluid="sm" style="width:1200px">
     <h1> Reports</h1>
-    <div class="row no-gutter">
+    <div v-if="$store.state.loggedIn" style="color: darkgreen; font-weight: bold">You are currently logged in!</div>
+    <div v-if="!$store.state.loggedIn" style="color: crimson; font-weight: bold">You are currently NOT logged in! Please
+      log in here:
+      <b-button class="btn btn-info" v-on:click="$router.push('login')">
+        LOGIN
+      </b-button>
+    </div>
+    <div class="row no-gutter" v-if="$store.state.loggedIn">
       <div class="col-md-8 col-lg-6 ">
         <table style="margin-top: 50px;">
           <tr>
@@ -13,7 +20,7 @@
           <tr>
             <td> How many of the cleaning service
               employees of Hotel 5 ,
-              are working more than 20h/week
+              are working exactly 20h/week
             </td>
             <td>
               <ul>
@@ -70,8 +77,11 @@
         </table>
       </div>
       <div class="col-md-6 col-lg-6 ">
-        <h2 v-if="showCleanTable"> cleaning service employees of Hotel 5, working more than 20h/week</h2>
-        <table v-if="cleaningEmployees.length>0 && showCleanTable" style="margin-top: 5px;">
+        <button class="btn btn-outline-info" v-on:click="$router.push('login')" type="button"
+                style="width:300px; margin-top: 20px"> Go back to admin tools
+        </button>
+        <h2 v-if="showCleanTable" style="margin-top: 20px"> Cleaning service employees of Hotel 5, working exactly 20h/week</h2>
+        <table v-if="cleaningEmployees.length>0 && showCleanTable" style="margin-top: 30px;margin-left: 40px">
           <tr>
             <th> ID</th>
             <th> First Name</th>
@@ -88,11 +98,11 @@
           </tr>
         </table>
 
-        <div v-if="cleaningEmployees.length==0" style="color: crimson"> There are no cleaning service employees, who
+        <div v-if="cleaningEmployees.length==0 && showCleanTable" style="color: crimson;margin-top: 30px"> There are no cleaning service employees, who
           works 20 Hours a week right now!
         </div>
 
-        <h2 v-if="showResTable"> "Single Rooms", that are reserved for more than 2 days </h2>
+        <h2 v-if="showResTable" style="margin-top: 20px"> "Single Rooms", that are reserved for more than 2 days: </h2>
         <table v-if="roomsMoreThan2days.length>0 && showResTable" style="margin-top: 30px;">
           <tr>
             <th> Room ID</th>
@@ -111,12 +121,12 @@
           </tr>
         </table>
 
-        <div v-if="roomsMoreThan2days.length==0" style="color: crimson"> There are no single rooms, booked for more than
+        <div v-if="roomsMoreThan2days.length==0 && showResTable" style="color: crimson;margin-top: 30px"> There are no single rooms, booked for more than
           2 days right now!
         </div>
 
-        <h2 v-if="showReservTable"> All reservation with full customer, reservation and room information:</h2>
-        <table v-if="reservations.length>0 && showReservTable" style="margin-top: 10px;">
+        <h2 v-if="showReservTable" style="margin-top: 20px"> All reservation with full customer, reservation and room information:</h2>
+        <table v-if="reservations.length>0 && showReservTable" style="margin-top: 30px;">
           <tr>
             <th> Room ID</th>
             <th> ReservationId</th>
@@ -137,8 +147,7 @@
           </tr>
         </table>
 
-        <div v-if="roomsMoreThan2days.length==0" style="color: crimson"> There are no single rooms, booked for more than
-          2 days right now!
+        <div v-if="reservations.length==0 && showReservTable" style="color: crimson;margin-top: 30px"> There are no current reservations!
         </div>
       </div>
     </div>
@@ -167,7 +176,7 @@ export default {
             this.roomsMoreThan2days = res.data;
             this.showResTable = true;
             this.showCleanTable = false;
-            this.showReservTable= false;
+            this.showReservTable = false;
           }
       )
     },

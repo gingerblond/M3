@@ -59,15 +59,14 @@ public class UserController {
     }*/
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping("/users/logout")
-    public Status logUserOut(@Valid @RequestBody User user) {
-        List<User> users = userRepository.findAll();
-        for (User other : users) {
-            if (other.equals(user)) {
-                user.setLoggedIn(false);
-                userRepository.save(user);
-                return Status.SUCCESS;
-            }
+    @PostMapping("/users/logout/{id}")
+    public Status logUserOut(@PathVariable String id) {
+        List<UserMo> users = userMoRepository.findAll();
+        UserMo userMo = userMoRepository.findByUserId(id);
+        if(userMo!=null){
+            userMo.setLoggedIn(false);
+            userMoRepository.save(userMo);
+            return Status.SUCCESS;
         }
         return Status.FAILURE;
     }
@@ -88,6 +87,4 @@ public class UserController {
         userRepository.deleteAll();
         return Status.SUCCESS;
     }
-
-
 }

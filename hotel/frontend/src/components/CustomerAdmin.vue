@@ -1,9 +1,11 @@
 <template>
   <b-container fluid="sm" style="width:1000px">
 
-    <h1> Room Administration</h1>
-
-    <div class="row no-gutter">
+    <h1> Customer Administration</h1>
+    <div v-if="$store.state.loggedIn" style="color: darkgreen; font-weight: bold">You are currently logged in!</div>
+    <div v-if="!$store.state.loggedIn" style="color: crimson; font-weight: bold">You are currently NOT logged in! Please log in here: <b-button class="btn btn-info" v-on:click="$router.push('login')">
+      LOGIN</b-button> </div>
+    <div class="row no-gutter" v-if="$store.state.loggedIn">
       <div class="col-md-8 col-lg-6 ">
         <h2 style="margin-top: 20px">Get customers by their First or Last Name, IdCard or Customer ID:</h2>
         <b-form class="form-control-sm" v-on:submit.prevent="getCustomersBySearch">

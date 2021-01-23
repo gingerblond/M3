@@ -2,8 +2,10 @@
   <b-container fluid="sm" style="width:1000px">
 
     <h1> Room Administration</h1>
-
-    <div class="row no-gutter">
+    <div v-if="$store.state.loggedIn" style="color: darkgreen; font-weight: bold">You are currently logged in!</div>
+    <div v-if="!$store.state.loggedIn" style="color: crimson; font-weight: bold">You are currently NOT logged in! Please log in here: <b-button class="btn btn-info" v-on:click="$router.push('login')">
+      LOGIN</b-button> </div>
+    <div class="row no-gutter" v-if="this.$store.state.loggedIn">
       <div class="col-md-8 col-lg-6 ">
         <div>Get available Rooms or get all rooms under construction(unavailable, but not reserved:</div>
         <b-button class="btn btn-info" style="width:300px; margin-top: 20px" v-on:click="getRooms"> Get rooms
