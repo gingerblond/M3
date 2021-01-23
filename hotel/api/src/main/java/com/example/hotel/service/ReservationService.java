@@ -3,10 +3,15 @@ package com.example.hotel.service;
 import com.example.hotel.entity.Customer;
 import com.example.hotel.entity.Reservation;
 import com.example.hotel.entity.Room;
+import com.example.hotel.model.ReservationMo;
 import com.example.hotel.repository.CustomerRepository;
 import com.example.hotel.repository.ReservationRepository;
 import com.example.hotel.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,6 +26,8 @@ public class ReservationService {
     private CustomerRepository customerRepository;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     /**
      * POST Save new reservation
@@ -94,4 +101,32 @@ public class ReservationService {
         existingRoom.setType(room.getType());
         return roomRepository.save(existingRoom);
     }
+
+    public List<ReservationMo> reservationSingleRoomMoreThan2Days() {
+        Query query = new Query()
+                .addCriteria(Criteria.where("room.type").is("SINGLE_ROOM")
+                .and("duration").gt(2));
+        query.fields().include("room.roomId");
+        query.fields().include("id");
+        query.fields().include("customer.idCard");
+        query.fields().include("duration");
+        query.fields().include("date");
+        return mongoTemplate.find(query, ReservationMo.class);
+
+    }
+
+    public List<ReservationMo> allReservations () {
+        Query query = new Query();
+        query.fields().include("room.roomId");
+        query.fields().include("id");
+        query.fields().include("customer.id");
+        query.fields().include("customer.firstName");
+        query.fields().include("customer.lastName");
+        query.fields().include("duration");
+        query.fields().include("room.type");
+        query.fields().include("date");
+
+        return mongoTemplate.find(query, ReservationMo.class);
+    }
+
 }

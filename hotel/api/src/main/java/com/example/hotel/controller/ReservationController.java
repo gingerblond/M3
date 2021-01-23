@@ -3,6 +3,7 @@ package com.example.hotel.controller;
 import com.example.hotel.dto.ReservationReport;
 
 import com.example.hotel.entity.Reservation;
+import com.example.hotel.model.ReservationMo;
 import com.example.hotel.repository.CustomerRepository;
 import com.example.hotel.repository.ReservationRepository;
 import com.example.hotel.repository.RoomRepository;
@@ -25,6 +26,7 @@ public class ReservationController {
 
     @Autowired
     private RoomRepository roomRepository;
+
 
     /**
      * POST Save a new reservation
@@ -110,4 +112,15 @@ public class ReservationController {
         return reservationRepository.getRoomsBookedMoreThan2Days();
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/mongoSingleRoomsMoreThan2Days")
+    public List<ReservationMo> mongoTest(){
+        return service.reservationSingleRoomMoreThan2Days();
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/mongoAllReservations")
+    public List<ReservationMo> mongoReservation(){
+        return service.allReservations();
+    }
 }

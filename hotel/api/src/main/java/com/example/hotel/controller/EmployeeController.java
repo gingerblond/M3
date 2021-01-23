@@ -4,6 +4,7 @@ package com.example.hotel.controller;
 import com.example.hotel.dto.CleaningServiceEmployeeReport;
 import com.example.hotel.entity.CleaningServiceEmployee;
 import com.example.hotel.entity.CustomerServiceEmployee;
+import com.example.hotel.model.CleaningServiceEmplMo;
 import com.example.hotel.repository.CleaningServiceEmployeeRepository;
 import com.example.hotel.repository.CustomerServiceEmployeeRepository;
 import com.example.hotel.repository.HotelRepository;
@@ -31,6 +32,7 @@ public class EmployeeController {
 
     @Autowired
     private CleaningServiceEmployeeRepository cleaningServiceEmployeeRepository;
+
 
     /*******************************************************************************
      *************** APIS for Customer Service Employees below:*********************
@@ -157,6 +159,12 @@ public class EmployeeController {
     @GetMapping("/CleaningServiceEmployees20Hours")
     public List<CleaningServiceEmployeeReport> getReportClean(){
         return cleaningServiceEmployeeRepository.getReportCleaningServiceEmployee();
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/mongoCleaningService20Hours")
+    public List<CleaningServiceEmplMo> mongoEmployee20Hours(){
+        return cleaningEmployeeService.employees20hours();
     }
 
 

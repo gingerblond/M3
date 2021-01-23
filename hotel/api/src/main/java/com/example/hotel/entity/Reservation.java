@@ -17,7 +17,7 @@ import java.util.Date;
 public class Reservation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reservationID;
     private double price;
     private String date;
