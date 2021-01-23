@@ -68,6 +68,8 @@ export default {
           (res) => {
             this.resDelete = res.data;
             this.showDelete = true;
+            this.customersList= this.customersList.filter(customer=>customer.customerId!=id);
+
           }
       )
     }

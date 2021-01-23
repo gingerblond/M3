@@ -90,7 +90,7 @@ public class ReservationService {
     }
 
     /**
-     * Get all reservations by Customer ID
+     * Get all reservations by Customer ID from MongoDb
      * @param customerId
      * @return
      */
@@ -105,6 +105,8 @@ public class ReservationService {
         }
         return reservationsByCustomer;
     }
+
+
 
     /**
      * Update reservation SQL

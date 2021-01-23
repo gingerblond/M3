@@ -2,7 +2,10 @@ package com.example.hotel.service;
 
 import com.example.hotel.entity.Customer;
 import com.example.hotel.entity.Reservation;
+import com.example.hotel.model.CustomerMo;
+import com.example.hotel.model.ReservationMo;
 import com.example.hotel.repository.CustomerRepository;
+import com.example.hotel.repositoryMo.CustomerMoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,11 @@ public class CustomerService {
     @Autowired
     private CustomerRepository repository;
     @Autowired
+    private CustomerMoRepository customerMoRepository;
+    @Autowired
     private ReservationService reservationService;
+
+
 
     /**
      * POST add new customer
@@ -43,7 +50,7 @@ public class CustomerService {
     }
 
     /**
-     * Delete customer by customer's Id. This method deletes also all the reservations made by this customer and sets all rooms to available again
+     * Delete customer by customer's Id. This method deletes also all the reservations made by this customer and sets all rooms to available again in MySQl
      * @param id
      * @return
      */
@@ -57,6 +64,24 @@ public class CustomerService {
             reservationService.deleteReservation(reservation.getReservationID());
         }
         repository.deleteById(id);
+        return "Customer with ID: "+id +" successfully removed !! ";
+    }
+
+    /**
+     * Delete customer by customer's Id. This method deletes also all the reservations made by this customer and sets all rooms to available again in MongoDB
+     * @param id
+     * @return
+     */
+    public String deleteCustomerMo(String id) {
+        List<ReservationMo> reservations = new ArrayList<>();
+        /**
+         * TODO
+         */
+        reservations = reservationService.getReservationsByCustomerID(id);
+        for (ReservationMo reservation: reservations) {
+            reservationService.deleteReservationMo(reservation.getReservationId());
+        }
+        customerMoRepository.delete(customerMoRepository.findByCustomerId(id));
         return "Customer with ID: "+id +"successfully removed !! ";
     }
 
@@ -73,7 +98,7 @@ public class CustomerService {
     }
 
     /**
-     * Search by Customers by criteria such as: first Name OR last Name OR ID Card OR Customer's id
+     * Search by Customers by criteria such as: first Name OR last Name OR ID Card OR Customer's id in MySQL
      * @param search
      * @return
      */
@@ -91,5 +116,26 @@ public class CustomerService {
         }
         return  foundCustomers;
     }
+
+    /**
+     * Search by Customers by criteria such as: first Name OR last Name OR ID Card OR Customer's id in MySQL
+     * @param search
+     * @return
+     */
+    public List<CustomerMo> findByIdNameIdCardMo(String search){
+        List<CustomerMo> foundCustomers = new ArrayList<>();
+        List<CustomerMo> customers = customerMoRepository.findAll();
+        Customer foundCustomer = new Customer();
+        for (CustomerMo customer: customers) {
+            if(customer.getFirstName().equals(search) ||
+                    customer.getLastName().equals(search) ||
+                    customer.getIdCard().equals(search) ||
+                    customer.getCustomerId().equals(search)){
+                foundCustomers.add(customer);
+            }
+        }
+        return  foundCustomers;
+    }
+
 
 }
