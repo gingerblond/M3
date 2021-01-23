@@ -1,5 +1,7 @@
 package com.example.hotel.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Data
 @Document(collection = "cleaningServiceEmpl_DB")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class CleaningServiceEmplMo extends EmployeeMo{
 
     private int workingHours;

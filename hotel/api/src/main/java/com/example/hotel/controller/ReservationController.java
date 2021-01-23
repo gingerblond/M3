@@ -106,7 +106,7 @@ public class ReservationController {
     }
 
     /**
-     * Report about all reservation with full customer, reservation and room information
+     * Report about all reservation with full customer, reservation and room information from MySQL
      * @return
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -116,13 +116,32 @@ public class ReservationController {
     }
 
     /**
-     * Get all booked SINGLE rooms more than 2 days
+     * Get all booked SINGLE rooms more than 2 days from MySQL
      * @return
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/getSingleRoomsBookedMoreThan2Days")
     public List<ReservationReport> getBookedRooms(){
         return reservationRepository.getRoomsBookedMoreThan2Days();
+    }
+
+    /**
+     * Report about all reservation with full customer, reservation and room information from MongoDB
+     * @return
+     */
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/mongoSingleRoomsMoreThan2Days")
+    public List<ReservationMo> mongoTest(){
+        return service.reservationSingleRoomMoreThan2Days();
+    }
+    /**
+     * Get all booked SINGLE rooms more than 2 days from MongoDB
+     * @return
+     */
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/mongoAllReservations")
+    public List<ReservationMo> mongoReservation(){
+        return service.allReservations();
     }
 
 }

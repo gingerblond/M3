@@ -81,7 +81,7 @@
                 style="width:300px; margin-top: 20px"> Go back to admin tools
         </button>
         <h2 v-if="showCleanTable" style="margin-top: 20px"> Cleaning service employees of Hotel 5, working exactly 20h/week</h2>
-        <table v-if="cleaningEmployees.length>0 && showCleanTable" style="margin-top: 30px;margin-left: 40px">
+        <table v-if="cleaningEmployees.length>0 && showCleanTable" style="margin-top: 30px;margin-left: 30px">
           <tr>
             <th> ID</th>
             <th> First Name</th>
@@ -103,7 +103,7 @@
         </div>
 
         <h2 v-if="showResTable" style="margin-top: 20px"> "Single Rooms", that are reserved for more than 2 days: </h2>
-        <table v-if="roomsMoreThan2days.length>0 && showResTable" style="margin-top: 30px;">
+        <table v-if="roomsMoreThan2days.length>0 && showResTable" style="margin-top: 30px;margin-left: 30px">
           <tr>
             <th> Room ID</th>
             <th> ReservationId</th>
@@ -111,10 +111,10 @@
             <th> Duration</th>
             <th> Start Date</th>
           </tr>
-          <tr v-for="res in roomsMoreThan2days" :key="res.reservationID">
-            <td> {{ res.roomID }}</td>
-            <td> {{ res.reservationID }}</td>
-            <td> {{ res.idCard }}</td>
+          <tr v-for="res in roomsMoreThan2days" :key="res.reservationId">
+            <td> {{ res.room.roomId }}</td>
+            <td> {{ res.reservationId}}</td>
+            <td> {{ res.customer.idCard }}</td>
             <td>{{ res.duration }}</td>
             <td>{{ res.date }}</td>
 
@@ -126,23 +126,23 @@
         </div>
 
         <h2 v-if="showReservTable" style="margin-top: 20px"> All reservation with full customer, reservation and room information:</h2>
-        <table v-if="reservations.length>0 && showReservTable" style="margin-top: 30px;">
+        <table v-if="reservations.length>0 && showReservTable" style="margin-top: 30px;margin-left: 30px">
           <tr>
             <th> Room ID</th>
-            <th> ReservationId</th>
+            <th> Reservation ID</th>
             <th> Customer Id Card</th>
             <th> Customer Name</th>
             <th> Duration</th>
             <th>Room type</th>
             <th> Start Date</th>
           </tr>
-          <tr v-for="res in reservations" :key="res.reservationID">
-            <td> {{ res.roomID }}</td>
-            <td> {{ res.reservationID }}</td>
-            <td> {{ res.idCard }}</td>
-            <td>{{ res.firstName }} {{ res.lastName }}</td>
+          <tr v-for="res in reservations" :key="res.reservationId">
+            <td> {{ res.room.roomId }}</td>
+            <td> {{ res.reservationId }}</td>
+            <td> {{ res.customer.idCard }}</td>
+            <td>{{ res.customer.firstName }} {{ res.customer.lastName }}</td>
             <td>{{ res.duration }}</td>
-            <td> {{ res.type }}</td>
+            <td> {{ res.room.type }}</td>
             <td>{{ res.date }}</td>
           </tr>
         </table>
@@ -161,7 +161,7 @@ export default {
   name: "Reports",
   methods: {
     getCleaningEmployees() {
-      axios.get("http://localhost:8000/CleaningServiceEmployees20Hours").then(
+      axios.get("http://localhost:8000/mongoCleaningService20Hours").then(
           (res) => {
             this.cleaningEmployees = res.data;
             this.showCleanTable = true;
@@ -171,7 +171,7 @@ export default {
       )
     },
     getRooms() {
-      axios.get("http://localhost:8000/getSingleRoomsBookedMoreThan2Days").then(
+      axios.get("http://localhost:8000/mongoSingleRoomsMoreThan2Days").then(
           (res) => {
             this.roomsMoreThan2days = res.data;
             this.showResTable = true;
@@ -181,7 +181,7 @@ export default {
       )
     },
     getReservations() {
-      axios.get("http://localhost:8000/getReservationReport").then(
+      axios.get("http://localhost:8000/mongoAllReservations").then(
           (res) => {
             this.reservations = res.data;
             this.showReservTable = true;
@@ -211,25 +211,35 @@ export default {
       ],
       roomsMoreThan2days: [
         {
-          reservationID: null,
+          reservationId: null,
           firstName: null,
           lastName: null,
-          idCard: null,
+          customer:{
+            idCard: null
+          },
           date: null,
           duration: null,
-          roomID: null,
-          type: null
+          room:{
+            roomId: null,
+            type: null
+          },
+
         }],
       reservations: [
         {
-          reservationID: null,
-          firstName: null,
-          lastName: null,
-          idCard: null,
+          reservationId: null,
+          customer:{
+            idCard: null,
+            firstName: null,
+            lastName: null
+          },
           date: null,
           duration: null,
-          roomID: null,
-          type: null
+          room:{
+            roomId: null,
+            type: null
+          },
+
         }],
       showCleanTable: false,
       showResTable: false,

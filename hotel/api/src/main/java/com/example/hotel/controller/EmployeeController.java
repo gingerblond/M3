@@ -162,10 +162,9 @@ public class EmployeeController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/CleaningServiceEmpl20Hours")
-    public List<CleaningServiceEmplMo> getReportClean20(){
-        return cleaningEmployeeService.getReportCleaningServiceEmployee();
+    @GetMapping("/mongoCleaningService20Hours")
+    public List<CleaningServiceEmplMo> mongoEmployee20Hours(){
+        return cleaningEmployeeService.employees20hours();
     }
-
 
 }
