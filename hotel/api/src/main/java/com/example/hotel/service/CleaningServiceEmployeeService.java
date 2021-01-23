@@ -75,7 +75,8 @@ public class CleaningServiceEmployeeService {
 
     public List<CleaningServiceEmplMo> employees20hours () {
         Query query = new Query()
-                .addCriteria(Criteria.where("workingHours").is(20));
+                .addCriteria(Criteria.where("workingHours").is(20)
+                .and("hotelMo.hotelId").is(1));
         query.fields().exclude("hotelMo");
 
         return mongoTemplate.find(query, CleaningServiceEmplMo.class);
