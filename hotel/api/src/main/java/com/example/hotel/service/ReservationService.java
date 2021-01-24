@@ -14,6 +14,7 @@ import com.example.hotel.repositoryMo.CustomerMoRepository;
 import com.example.hotel.repositoryMo.HotelMoRepository;
 import com.example.hotel.repositoryMo.ReservationMoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -189,6 +190,7 @@ public class ReservationService {
         query.fields().include("customer.idCard");
         query.fields().include("duration");
         query.fields().include("date");
+        query.with(Sort.by(Sort.Order.desc("duration")));
         return mongoTemplate.find(query, ReservationMo.class);
 
     }
@@ -207,6 +209,7 @@ public class ReservationService {
         query.fields().include("duration");
         query.fields().include("room.type");
         query.fields().include("date");
+        query.with(Sort.by(Sort.Order.asc("room.roomId")));
 
         return mongoTemplate.find(query, ReservationMo.class);
     }
