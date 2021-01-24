@@ -23,7 +23,7 @@
               are working exactly 20h/week
             </td>
             <td>
-              <ul>
+              <ul style="align-self: flex-start">
                 <li>hotel_id</li>
                 <li>workingHours</li>
               </ul>
@@ -60,7 +60,7 @@
             </td>
           </tr>
           <tr>
-            <td> All reservation with full customer, reservation and room informatios
+            <td> All reservation with full customer, reservation and room information
             </td>
             <td>
             </td>
@@ -81,6 +81,7 @@
                 style="width:300px; margin-top: 20px"> Go back to admin tools
         </button>
         <h2 v-if="showCleanTable" style="margin-top: 20px"> Cleaning service employees of Hotel 5, working exactly 20h/week</h2>
+        <h2 v-if="showCleanTable">SortedBy: CleaningServiceEmployee.LastName in descending order</h2>
         <table v-if="cleaningEmployees.length>0 && showCleanTable" style="margin-top: 30px;margin-left: 30px">
           <tr>
             <th> ID</th>
@@ -103,6 +104,7 @@
         </div>
 
         <h2 v-if="showResTable" style="margin-top: 20px"> "Single Rooms", that are reserved for more than 2 days: </h2>
+        <h2 v-if="showResTable"> SortedBy: Reservation.Duration in descending order</h2>
         <table v-if="roomsMoreThan2days.length>0 && showResTable" style="margin-top: 30px;margin-left: 30px">
           <tr>
             <th> Room ID</th>
@@ -126,6 +128,7 @@
         </div>
 
         <h2 v-if="showReservTable" style="margin-top: 20px"> All reservation with full customer, reservation and room information:</h2>
+        <h2 v-if="showReservTable"> SortedBy: Reservation.Rooms.Room.RoomId in ascending order</h2>
         <table v-if="reservations.length>0 && showReservTable" style="margin-top: 30px;margin-left: 30px">
           <tr>
             <th> Room ID</th>

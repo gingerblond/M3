@@ -6,6 +6,7 @@ import com.example.hotel.model.CleaningServiceEmplMo;
 import com.example.hotel.repository.CleaningServiceEmployeeRepository;
 import com.example.hotel.repositoryMo.CleaningServiceEmplMoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -133,6 +134,7 @@ public class CleaningServiceEmployeeService {
                 .addCriteria(Criteria.where("workingHours").is(20)
                         .and("hotel.hotelId").is(1));
         query.fields().exclude("hotel");
+        query.with(Sort.by(Sort.Order.desc("lastName")));
 
         return mongoTemplate.find(query, CleaningServiceEmplMo.class);
     }
