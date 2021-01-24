@@ -1,9 +1,15 @@
 <template>
   <b-container fluid="sm" style="width:1200px">
     <h1> Manage reservations</h1>
+    <b-card>
+      <b-card-text>
+        <div>You can find a list of all your reservations by typing your Customer Id.</div>
+        <div>You can edit or delete your reservation/s.</div>
+      </b-card-text>
+    </b-card>
     <b-form id="app" v-on:submit.prevent="getReservation">
       <div class="form-group" style="width:300px">
-        <label for="reservationID">Customer ID:</label>
+        <label for="reservationID"><strong>Customer ID:</strong></label>
         <input type="text" class="form-control" id="reservationID" placeholder="Please provide your CustomerID"
                v-model="form.customerID" required>
       </div>

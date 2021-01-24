@@ -23,11 +23,19 @@
         }}</strong>
       </b-alert>
     </b-card>
+    <b-card
+        title="Migration to MongoDB"
+        style="max-width: 40rem;margin-top:5px;margin-left: 600px;"
+        class="mb-2">
+      <b-card-text style=" text-align: left"> If you want to migrate all the data from MySql to MongoDb , please click the button:
+      </b-card-text>
     <b-button @click="migrateToMongo()"> Migrate To Mongo</b-button>
+
     <b-alert variant="warning" show v-if="migrationSuccess" style="margin-top: 150px"><strong>{{
         this.migrationPayload
       }}</strong>
     </b-alert>
+    </b-card>
   </div>
 </template>
 
