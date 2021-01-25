@@ -116,6 +116,7 @@ export default {
           (res)=>{
             this.success=true;
             this.parentData.reservationId=res.data.reservationId;
+            this.$emit('getReservation')
           }
       )
     }

@@ -43,7 +43,7 @@
     <div style="margin-top: 20px; font-weight:bold">{{deleteRes}}</div>
     <div v-if="reservations.length==0" style="color: crimson"> No reservations for customer with ID: {{ form.customerID }}</div>
     <div  style="font-weight: bold;font-size: large;margin-top: 10px" v-if="showForm"> Edit reservation with ID: {{resId}}</div>
-    <edit-reservation :parent-data="$data.editRes" v-if="showForm" style="margin-left: 20px"></edit-reservation>
+    <edit-reservation :parent-data="$data.editRes" v-if="showForm" style="margin-left: 20px" @getReservation="getReservation"></edit-reservation>
   </b-container>
 
 
@@ -71,8 +71,10 @@ export default {
       axios.get(`http://localhost:8000/getReservation/${id}`).then(
           (res) =>{
             this.editRes = res.data;
+            this.getReservation();
           }
       )
+
     } ,
     deleteReservation(id) {
       this.showForm = false;
@@ -80,9 +82,10 @@ export default {
           (res) => {
             this.deleteRes = res.data;
             this.reservations= this.reservations.filter(res=>res.reservationId!=id);
+            this.getReservation();
           }
       )
-      this.getReservation();
+
     },
   },
     data() {
