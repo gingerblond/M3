@@ -97,7 +97,7 @@ public class DBFeedingService {
      * create 5 reservations with 5 new customers
      */
     public void createReservations(){
-        for (int i=0; i<=4;i++){
+        for (int i=1; i<=5;i++){
             reservationsDB.add(new Reservation(i,price[new Random().nextInt(price.length)],dates[new Random().nextInt(dates.length)],
                     i, customers.get(0),roomsDB.get(i)));
         }
