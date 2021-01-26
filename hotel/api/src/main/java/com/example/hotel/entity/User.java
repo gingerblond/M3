@@ -6,6 +6,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import java.util.Objects;
+
+/**
+ * Reference: https://medium.com/javarevisited/a-simple-user-authentication-api-made-with-spring-boot-4a7135ff1eca
+ */
 @Entity
 @Table(name = "users")
 public class User {
