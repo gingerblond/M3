@@ -41,6 +41,8 @@
     <b-alert variant="success" show v-if="showSuccess"> You added successfully new employee with ID: <strong>{{employeeId}}</strong>. Username is:<strong>{{form.user.username}}</strong>.
       Password is:<strong>{{form.user.password}}</strong>
     </b-alert>
+    <b-alert variant="danger" show v-if="!showSuccess && errorAdd"> {{ errorAdd }} <strong>Customer Service employee with that phone number already exists!</strong>.
+    </b-alert>
 
   </b-form>
 </template>
@@ -74,7 +76,9 @@ export default {
             this.employeeId = res.data.employeeId;
             this.showSuccess =true;
           }
-      )
+      ).catch(error=>{
+        this.errorAdd=error.message;
+      })
     }
   },
   beforeMount() {
@@ -107,7 +111,8 @@ export default {
         }
       },
       employeeId: null,
-      showSuccess: false
+      showSuccess: false,
+      errorAdd: null
     };
   }
 }

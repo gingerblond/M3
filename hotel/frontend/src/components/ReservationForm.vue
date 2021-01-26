@@ -34,7 +34,7 @@
       </div>
       <b-alert variant="success" show v-if="successNewCustomer && newC" style="margin-top: 10px"> Customer with ID: <strong>{{form.customer.customerId}}</strong>
         was successfully added! Hello, {{form.customer.firstName}} {{form.customer.lastName}}</b-alert>
-
+      <b-alert variant="danger" show v-if="!successNewCustomer && errorCust && newC" style="margin-top: 10px"> {{errorCust}} <strong>Please provide full customer details!</strong></b-alert>
       <div class="form-group" v-if="oldC">
         <label for="cusId">Customer Id</label>
         <input type="text" id="cusId" class="form-control" placeholder="Please put your Customer ID"
@@ -95,8 +95,11 @@
       </div>
 
     </b-form>
-    <b-alert variant="success" show v-if="showSuccess"> You submitted successfully reservation with ID: <strong>{{reservationId}}</strong>
+    <b-alert variant="success" show v-if="showSuccess && !errorRes"> You submitted successfully reservation with ID: <strong>{{reservationId}}</strong>
       Please save this Customer ID: <strong>{{this.form.customer.customerId}}</strong>, if you want to manage your reservations!
+
+    </b-alert>
+    <b-alert variant="danger" show v-if="!showSuccess && errorRes">  <strong>Some customer information is failing!</strong>{{errorRes}}
 
     </b-alert>
   </b-container>
@@ -139,6 +142,9 @@ export default {
             this.form.customer.idCard=res.data.idCard;
           }
       )
+      .catch((error) =>{
+        this.errorCust=error.message;
+      })
     },
     getCustomer() {
       axios.get( `http://localhost:8000/customerById/${this.form.customer.customerId}`).then(
@@ -160,11 +166,13 @@ export default {
       this.form.price = this.singlePrice* this.form.duration;
       axios.post('http://localhost:8000/addReservation', this.form).then(
           (res)=> {
-            this.response = res.data;
-            this.reservationId = this.response.reservationId;
-            this.showSuccess = true;
-          }
-      )
+              this.response = res.data;
+              this.reservationId = this.response.reservationId;
+              this.showSuccess = true;
+            }
+      ).catch(error=>{
+        this.errorRes=error.message;
+      })
 
     },
     onChange() {
@@ -245,6 +253,8 @@ export default {
         lastName: null,
         idCard: null
       },
+      errorCust: null,
+      errorRes:null
     };
   }
 }
