@@ -8,9 +8,8 @@ import com.example.hotel.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CustomerController {
@@ -26,10 +25,8 @@ public class CustomerController {
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/addCustomer")
-    /*public Customer addCustomer(@RequestBody Customer customer){
-        return service.addCustomer(customer);
-    }*/
-    public CustomerMo addCustomer(@RequestBody CustomerMo customerMo) {
+
+    public CustomerMo addCustomer(@Valid @RequestBody CustomerMo customerMo) {
         return customerMoRepository.insert(customerMo);
 
     }

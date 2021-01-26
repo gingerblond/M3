@@ -3,13 +3,14 @@ package com.example.hotel.model;
 import com.example.hotel.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @NoArgsConstructor
 @Data
 @Document(collection = "customerServiceEmpl_DB")
 public class CustomerServiceEmplMo extends EmployeeMo{
-
+    @Indexed(name = "custEmpl_phone", unique = true)
     private String phoneNumber;
     private String email;
     private UserMo user;

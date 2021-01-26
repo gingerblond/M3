@@ -152,7 +152,7 @@ public class EmployeeController {
     }
 
     /**
-     * Get all cleaning service employees of Hotel 5 who work 20 hours per week
+     * Get all cleaning service employees of Hotel 5 who work 20 hours per week from mySQL
      * @return
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -160,7 +160,10 @@ public class EmployeeController {
     public List<CleaningServiceEmployeeReport> getReportClean(){
         return cleaningServiceEmployeeRepository.getReportCleaningServiceEmployee();
     }
-
+    /**
+     * Get all cleaning service employees of Hotel 5 who work 20 hours per week from MongoDb
+     * @return
+     */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/mongoCleaningService20Hours")
     public List<CleaningServiceEmplMo> mongoEmployee20Hours(){

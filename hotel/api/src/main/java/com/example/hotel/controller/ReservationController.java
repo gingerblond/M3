@@ -43,9 +43,13 @@ public class ReservationController {
         return service.saveReservation(reservation);
     }*/
     public ReservationMo addReservation(@RequestBody ReservationMo reservationMo){
-        service.changeAvailabilityMo(reservationMo.getRoom());
-        reservationMo.getRoom().setAvailable(!reservationMo.getRoom().isAvailable());
-        return reservationMoRepository.save(reservationMo);
+        if (reservationMo.getCustomer().getCustomerId().equals("")) {
+            return null;
+        } else {
+            service.changeAvailabilityMo(reservationMo.getRoom());
+            reservationMo.getRoom().setAvailable(!reservationMo.getRoom().isAvailable());
+            return reservationMoRepository.save(reservationMo);
+        }
     }
 
     /**
